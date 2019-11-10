@@ -1,0 +1,128 @@
+body{
+    font-family: 'Yu Gothic'
+}
+.div0{
+    display:flex;
+    background-color: white;
+    height: 100%;
+    width:100%;
+}
+
+.div1
+{
+    background-image: url("../images/bg1.png");
+    background-color: #00aff0;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    height: 100%;
+    width: 70%;
+}
+
+
+.div2{
+    background-color: white;
+    width: 50px;
+    height: 20%;
+    position:relative;
+    margin-top:80px;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+.div3{
+    background-color: white;
+    width: 450px;
+    height: 30%;
+    margin:20px;
+    position:relative;
+    margin-top:300px;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+}
+
+.div3_1{
+    background-color:white;
+    width: 427px;
+    height: auto;
+    margin:20px;
+    position:relative;
+    margin-top:300px;
+    text-align: center;
+}
+
+.txt1{
+    color:#00aff0; 
+    padding:15px;
+}
+
+.txt2
+{
+    font-size: 20px;
+}
+
+.txtbx
+{
+    border: 1px solid white;
+    border-color: #00aff0;
+    width: 100%;
+    border-radius: 0.2rem;
+    color: #282d32;
+}
+
+.btn{
+    background-color: #00aff0;
+    border-radius: 0.2rem;
+    color: white;
+    border: #00aff0 solid 1px;
+    height:50px;
+    width:200px;
+    margin-top: 60px;
+    font-size: 25px;
+    padding-top:5px;
+}
+
+.btn:hover{
+    background-color: white;
+    color: #00aff0;
+}
+
+.tbt{
+    width:auto;
+    height: auto;
+}
+
+.tbth{
+    background-color: white;
+    padding-top:5px;
+    width:auto;
+    color:#00aff0;
+    text-align: right;
+    
+}
+
+.tbtd{
+    background-color: white;
+    width:auto;
+}
+
+.btnLog{
+    background-color: #00aff0;
+    border-radius: 0.2rem;
+    color: white;
+    border: #00aff0 solid 1px;
+    height:50px;
+    width:150px;
+    margin-top: 50px;
+    font-size: 25px;
+}
+
+.btnLog:hover{
+    background-color: white;
+    color: #00aff0;
+}
+
+p{
+    padding-right:20px;
+}

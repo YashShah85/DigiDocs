@@ -1,0 +1,119 @@
+body{
+    margin:0;
+}
+
+.div_0{
+    display: flex;
+    height: 100%;
+    width:100%;
+}
+
+.div0_1{
+    display: inline-block;
+    height: 100%;
+    width:20%;
+    background-color: #00aff0;
+}
+
+.div0_2{
+    display: inline-block;
+    height: 100%;
+    width:80%;
+    background-color: white;
+}
+
+.profile{
+    background-color: inherit;
+    height: auto;
+    width:auto;
+    display: flex;
+    justify-content: center;
+}
+
+.pic{
+    width:150px;
+    height:150px;
+    border-radius:80px;
+    margin-top: 30px;
+}
+
+.detail{
+    background-color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 0px;
+    height:auto;
+    width:auto;
+    color:#00aff0;
+    border-bottom-right-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.p1{
+    background-color: inherit;
+    font-size: 25px;
+    margin: 0%;
+    width: 50px;
+    padding-bottom: 5px;
+}
+
+.p2{
+    background-color: inherit;
+    font-size: 20px;
+    margin: 0%;
+    width: 50px;
+}
+
+.panel
+{
+    height: 70%;
+    width: auto;
+    background-color: grey;
+    margin-top: 15%;
+    margin-left: 5%;
+    margin-right: 5%;
+    opacity: 0.5;
+    border-radius: 0.5rem;
+}
+
+.option{
+    height: 5%;
+    width: auto;
+    background-color: #00aff0;
+}
+
+.setting
+{
+    height: 100%;
+    width: 4%;
+    float: right;
+    background-color: inherit;
+    overflow: hidden;
+}
+
+.s_img{
+    height: 100%;
+    width: 100%;
+}
+
+.btn1
+{
+    background-color: inherit;
+    border: none;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color:green;
+    z-index: 1;
+    color: gray;
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.setting:hover .dropdown-content {
+    display: block;
+}
