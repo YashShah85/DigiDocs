@@ -15,4 +15,9 @@ public interface Dao {
 	List<Folder> getSubFolders(Folder folder);
 	List<File> getFolderFiles(Folder folder);
 	List<File> getUserOwnedFiles(User user);
+	List<Folder> getRootFolders();
+	Folder getFolder(int fid);
+	void deleteFolder(Folder folder);
+	void deleteFile(File file);
+	File getFile(int id);
 }

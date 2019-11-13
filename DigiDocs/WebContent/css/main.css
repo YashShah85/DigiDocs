@@ -67,18 +67,30 @@ body{
 
 .panel
 {
-    height: 70%;
+    height: auto;
     width: auto;
-    background-color: grey;
-    margin-top: 15%;
+    background-color: white;
+    margin-top: 10%;
     margin-left: 5%;
     margin-right: 5%;
-    opacity: 0.5;
     border-radius: 0.5rem;
+    display: flex;
+}
+
+.panel_next
+{
+    height: auto;
+    width: auto;
+    background-color: white;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-radius: 0.5rem;
+    display: flex;
 }
 
 .option{
-    height: 5%;
+    height: auto;
     width: auto;
     background-color: #00aff0;
 }
@@ -96,24 +108,95 @@ body{
     height: 100%;
     width: 100%;
 }
-
-.btn1
+.dropdown
 {
-    background-color: inherit;
-    border: none;
+    height: 5%;
+    float: right;
+    position: relative;
+    display: inline-block;
 }
 
 .dropdown-content {
-    display: none;
+  
+    display: block;
     position: absolute;
-    background-color:green;
+    background-color: #00aff0;
+    min-width: 130px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 0px 10px;
     z-index: 1;
-    color: gray;
-    padding: 10px;
+    right:0;
+}
+.dropdown-content a {
+    color: white;
+    padding: 12px ;
     text-decoration: none;
     display: block;
+  }
+.dropdown a:hover {background-color: white; color: #00aff0; border: solid 1px white;}
+
+.show {display: block;}
+.dropbtn {
+    background-color: #00aff0; 
+    color: white;
+    font-weight: bold;
+    /* padding: 15px;  */
+    font-size: 25px;
+    padding-right:5px;
+    border: none;
+    cursor: pointer;
+      
+  }
+  
+  .dropbtn:hover, .dropbtn:focus {
+    background-color: white;
+    color: #00aff0;
+  }
+
+.btn1
+{
+    color: white;
+    background-color: #00aff0;
+    font-size: 16px;
+    border: solid 1px #00aff0;
+    border-radius: 30px;
+    padding: 5px 20px;
+}
+.btn1:hover
+{
+    cursor: pointer;
+    color: #00aff0;
+    background-color: white;
+    border: solid 1px white;
 }
 
-.setting:hover .dropdown-content {
-    display: block;
+.bx{
+    width: 200px;
+    text-align: center;
+    color: white;
+    font-size: 25px;
+    height: 35px;
+    background-color: #00aff0;
+    border-radius: 0.5em;
+    display: inline-block;
+    margin:10px;
+}
+
+.text{
+    padding-top:5px;
+}
+
+td{
+	padding : 10px;
+}
+
+.details{
+	color:white;
+	text-size:30px;
+	padding-left:10px;
+	
+}
+
+.dbx{
+	display:flex;
 }

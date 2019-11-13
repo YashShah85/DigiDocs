@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -48,6 +49,10 @@ public class Login extends HttpServlet {
 		{
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
+			if(user.getProfilepic() != null)
+				session.setAttribute("profilepic", Base64.getEncoder().encodeToString(user.getProfilepic()));
+			else
+				session.setAttribute("profilepic", null);
 			response.sendRedirect("home.jsp");
 		}
 		else
