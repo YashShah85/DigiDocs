@@ -23,7 +23,7 @@ public class ServiceImpl implements Service {
 	public User getUser(String email, String password) {
 		// TODO Auto-generated method stub
 		User user = null;
-		User temp = dao.geUser(email);
+		User temp = dao.getUser(email);
 		if(temp != null && temp.getPassword().equals(password)) 
 		{
 			user = temp;	
@@ -107,5 +107,10 @@ public class ServiceImpl implements Service {
 	public File getFile(int id) {
 		// TODO Auto-generated method stub
 		return dao.getFile(id);
+	}
+	@Override
+	public User getUserForAccess(String email) {
+		// TODO Auto-generated method stub
+		return dao.getUser(email);
 	}
 }

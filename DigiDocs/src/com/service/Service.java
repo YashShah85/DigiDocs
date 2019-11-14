@@ -20,4 +20,5 @@ public interface Service {
 	void deleteFolder(Folder folder);
 	void deleteFile(File file);
 	File getFile(int id);
+	User getUserForAccess(String email);
 }

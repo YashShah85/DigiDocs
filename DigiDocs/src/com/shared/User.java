@@ -35,7 +35,7 @@ public class User implements Serializable {
 	private List<Folder> folders;
 
 	//bi-directional many-to-many association to File
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinTable(
 		name="user_file_access"
 		, joinColumns={

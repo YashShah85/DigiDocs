@@ -89,4 +89,14 @@
     <servlet-name>Delete</servlet-name>
     <url-pattern>/Delete</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GrantAccess</display-name>
+    <servlet-name>GrantAccess</servlet-name>
+    <servlet-class>com.servlet.GrantAccess</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GrantAccess</servlet-name>
+    <url-pattern>/GrantAccess</url-pattern>
+  </servlet-mapping>
 </web-app>

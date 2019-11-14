@@ -21,7 +21,7 @@ public class DaoImpl implements Dao {
 	}
 
 	@Override
-	public User geUser(String email) {
+	public User getUser(String email) {
 		// TODO Auto-generated method stub
 		User user = null;
 		user = em.find(User.class, email);

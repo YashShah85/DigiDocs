@@ -30,8 +30,14 @@
 		</div>
 		<div class="div0_2">
 			<div class="option">
+				<c:if test="${sessionScope.user.name == folder.user.name }">
 				<button class="btn1" id="UploadFile">Upload file</button>
 				<button class="btn1" id="CreateFolder">Create folder</button>
+				</c:if>
+				<c:if test="${sessionScope.user.name != folder.user.name }">
+				<button class="btn1" id="UploadFile" disabled="disabled" onclick="alert('You can upload files in your folder only!')">Upload file</button>
+				<button class="btn1" id="CreateFolder" disabled="disabled">Create folder</button>
+				</c:if>
 				<a href="Logout" class="btn1" style="float: right;">Logout</a>
 			</div>
 			<div>
@@ -45,8 +51,11 @@
 							<c:param name="type" value="folder"></c:param>
 						</c:url>
 						<tr>
-							<td class="tbtd"><a href="${openFolder}"><c:out value="${folder.folderName}"></c:out></a></td>
-							<td class="tbtd"><a class="btn1" href="${deleteFolder}">Delete</a></td>
+							<td class="tbtd"><a href="${openFolder}"><c:out
+										value="${folder.folderName}"></c:out></a></td>
+							<c:if test="${sessionScope.user.name == folder.user.name }">
+								<td class="tbtd"><a class="btn1" href="${deleteFolder}">Delete</a></td>
+							</c:if>
 						</tr>
 					</c:forEach>
 				</table>
@@ -57,9 +66,19 @@
 							<c:param name="type" value="file"></c:param>
 						</c:url>
 						<tr>
-							<td><a href="${file.url }"><c:out
-										value="${file.fileName}"></c:out></a></td>
-							<td><a class="btn1" href="${delete}">Delete</a></td>
+							<form id="accessForm">
+								<td><a href="${file.url }"><c:out
+											value="${file.fileName}"></c:out></a></td>
+								<c:if test="${sessionScope.user.name == file.user.name }">
+									<td><a class="btn1" href="${delete}">Delete</a></td>
+								</c:if>
+							<td><input type="hidden" name="fileId"
+								value="${file.fileId }"></td>
+							<c:if test="${sessionScope.user.name == file.user.name }">
+								<td><input type="submit" class="btn1" id="grantAccess"
+									value="Grant Access"></td>
+							</c:if>
+							</form>
 						</tr>
 					</c:forEach>
 				</table>
@@ -101,18 +120,42 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form action="<%=request.getContextPath()%>/UploadFile" method="post" enctype="multipart/form-data">
+				<form action="<%=request.getContextPath()%>/UploadFile"
+					method="post" enctype="multipart/form-data">
+					<div class="modal-body">
+						<input type="file" name="file" id="newFile"
+							placeholder="Your file"> <br> <input type="radio"
+							name="access" id="access" value="open" checked>Public <input
+							type="radio" name="access" id="access" value="close">Private
+					</div>
+					<div class="modal-footer">
+						<input type="submit" class="btn btn-primary">
+						<!-- 					<button type="button" class="btn btn-primary" id="upload">Upload File</button> -->
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="grantAccessModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Enter the User
+						Email Id below</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
 				<div class="modal-body">
-				<input type="file" name="file" id="newFile" placeholder="Your file">
-				<br>
-				<input type="radio" name="access" id="access" value="open" checked>Public
-				<input type="radio" name="access" id="access" value="close">Private
+					<input type="email" id="userId" class="txtbx"
+						placeholder="Enter Email Id Here">
 				</div>
 				<div class="modal-footer">
-				<input type="submit" class="btn btn-primary">
-<!-- 					<button type="button" class="btn btn-primary" id="upload">Upload File</button> -->
+					<button type="button" class="btn btn-primary" id="grant">Grant
+						Access</button>
 				</div>
-				</form>
 			</div>
 		</div>
 	</div>
@@ -123,24 +166,28 @@
 		var btn = document.getElementById("CreateFolder");
 		var foldername= document.getElementById("newFolderName");
 		var span = document.getElementsByClassName("close")[0];
+		var create = document.getElementById("create");
 		btn.onclick = function() {
 			modal.style.display = "block";
 		}
 		span.onclick = function() {
 			modal.style.display = "none";
-			document.getElementById('newFolderName').value == '';
+			$('#newFolderName').val(' ');
 		}
 		window.onclick = function(event) {
 			if (event.target == modal) {
 				modal.style.display = "none";
+				$('#newFolderName').val(' ');
 			}
+		}
+		create.onclick = function(){
+			modal.style.display = "none";
 		}
 		
 		$('#create').on('click',function(e){
 			var fname=$('#newFolderName').val();
 			console.log(fname);
 			$.get("<%=request.getContextPath()%>/CreateFolder", {name : "" + fname + ""}).done(function() {
-
 		});
 	});
 
@@ -154,12 +201,58 @@
 	}
 	span2.onclick = function() {
 		modal2.style.display = "none";
-		document.getElementById('newFile').value == '';
+		$('#newFile').val(' ');
 	}
 	window.onclick = function(event) {
 		if (event.target == modal2) {
 			modal2.style.display = "none";
+			$('#newFile').val(' ');
 		}
 	}
+	
+	var data;
+	var fileId;
+	$('#accessForm').submit(function(e){
+		e.preventDefault();
+		data=$(this).serialize();
+		console.log(data);
+		var fakeURL = "http://www.example.com/t.html?" +  data;
+		var createURL = new URL(fakeURL);
+		fileId=createURL.searchParams.get('fileId');
+		return false;
+	});
+	
+	var modal3 = document.getElementById("grantAccessModal");
+	var btn3 = document.getElementById("grantAccess");
+	var userId= document.getElementById("userId");
+	var span3 = document.getElementsByClassName("close")[2];
+	var grant = document.getElementById("grant");
+	btn3.onclick = function() {
+		modal3.style.display = "block";
+	}
+	span3.onclick = function() {
+		modal3.style.display = "none";
+		$('#userId').val(' ');
+	}
+	window.onclick = function(event) {
+		if (event.target == modal3) {
+			modal3.style.display = "none";
+			$('#userId').val(' ');
+		}
+	}
+	grant.onclick = function(){
+		modal3.style.display = "none";
+	}
+	
+	
+	$('#grant').on('click',function(e){
+		var uid=$('#userId').val();
+		$.get("<%=request.getContextPath()%>
+	/GrantAccess", {
+			userId : "" + uid + "",
+			fileId : "" + fileId + ""
+		}).done(function() {
+		});
+	});
 </script>
 </html>

@@ -8,7 +8,7 @@ import com.shared.*;
 
 public interface Dao {
 	EntityManager getEntityManager();
-	User geUser(String email);
+	User getUser(String email);
 	void addUser(User user);
 	void addFolder(Folder folder);
 	void addFile(File file);
