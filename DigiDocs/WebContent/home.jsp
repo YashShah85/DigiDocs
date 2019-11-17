@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <!-- <!DOCTYPE html> -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <html>
 <head>
 <meta charset="ISO-8859-1">
@@ -31,12 +32,15 @@
 		<div class="div0_2">
 			<div class="option">
 				<c:if test="${sessionScope.user.name == folder.user.name }">
-				<button class="btn1" id="UploadFile">Upload file</button>
-				<button class="btn1" id="CreateFolder">Create folder</button>
+					<button class="btn1" id="UploadFile">Upload file</button>
+					<button class="btn1" id="CreateFolder">Create folder</button>
 				</c:if>
 				<c:if test="${sessionScope.user.name != folder.user.name }">
-				<button class="btn1" id="UploadFile" disabled="disabled" onclick="alert('You can upload files in your folder only!')">Upload file</button>
-				<button class="btn1" id="CreateFolder" disabled="disabled">Create folder</button>
+					<button class="btn1" id="UploadFile" disabled="disabled"
+						onclick="alert('You can upload files in your folder only!')">Upload
+						file</button>
+					<button class="btn1" id="CreateFolder" disabled="disabled">Create
+						folder</button>
 				</c:if>
 				<a href="Logout" class="btn1" style="float: right;">Logout</a>
 			</div>
@@ -65,19 +69,39 @@
 							<c:param name="id" value="${file.fileId }"></c:param>
 							<c:param name="type" value="file"></c:param>
 						</c:url>
+						<c:set var="contains" value="false" />
+						<c:forEach var="item" items="${sessionScope.user.files2}">
+							<c:if test="${item.fileName eq file.fileName}">
+								<c:set var="contains" value="true" />
+							</c:if>
+						</c:forEach>
 						<tr>
 							<form id="accessForm">
-								<td><a href="${file.url }"><c:out
-											value="${file.fileName}"></c:out></a></td>
+								<td><c:if
+										test="${sessionScope.user.name == file.user.name  || contains == true}">
+										<a href="${file.url }"><c:out value="${file.fileName}"></c:out></a>
+									</c:if> <c:if
+										test="${sessionScope.user.name != file.user.name  && contains == false}">
+										<c:out value="${file.fileName}"></c:out>
+									</c:if></td>
 								<c:if test="${sessionScope.user.name == file.user.name }">
 									<td><a class="btn1" href="${delete}">Delete</a></td>
 								</c:if>
-							<td><input type="hidden" name="fileId"
-								value="${file.fileId }"></td>
+								<input type="hidden" name="fileId"
+									value="${file.fileId }">
+								<c:if test="${sessionScope.user.name == file.user.name }">
+									<td><input type="submit" class="btn1" id="grantAccess"
+										value="Grant Access"></td>
+								</c:if>
+							</form>
+							<form id="revokeForm">
+							<input type="hidden" name="fileId"
+									value="${file.fileId }">
+							
 							<c:if test="${sessionScope.user.name == file.user.name }">
-								<td><input type="submit" class="btn1" id="grantAccess"
-									value="Grant Access"></td>
-							</c:if>
+									<td><input type="submit" class="btn1" id="revokeAccess"
+										value="Revoke Access"></td>
+								</c:if>
 							</form>
 						</tr>
 					</c:forEach>
@@ -154,6 +178,29 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="grant">Grant
+						Access</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal" id="revokeAccessModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Enter the User
+						Email Id below</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input type="email" id="revokeUserId" class="txtbx"
+						placeholder="Enter Email Id Here">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="revoke">Revoke
 						Access</button>
 				</div>
 			</div>
@@ -247,11 +294,45 @@
 	
 	$('#grant').on('click',function(e){
 		var uid=$('#userId').val();
-		$.get("<%=request.getContextPath()%>
-	/GrantAccess", {
-			userId : "" + uid + "",
-			fileId : "" + fileId + ""
-		}).done(function() {
+		$.get("<%=request.getContextPath()%>/GrantAccess", {userId : "" + uid + "",fileId : "" + fileId + ""}).done(function() {
+		});
+	});
+	
+	$('#revokeForm').submit(function(e){
+		e.preventDefault();
+		data=$(this).serialize();
+		console.log(data);
+		var fakeURL = "http://www.example.com/t.html?" +  data;
+		var createURL = new URL(fakeURL);
+		fileId=createURL.searchParams.get('fileId');
+		return false;
+	});
+	
+	var modal4 = document.getElementById("revokeAccessModal");
+	var btn4 = document.getElementById("revokeAccess");
+	var revokeUserId= document.getElementById("revokeUserId");
+	var span4 = document.getElementsByClassName("close")[3];
+	var revoke = document.getElementById("revoke");
+	btn4.onclick = function() {
+		modal4.style.display = "block";
+	}
+	span4.onclick = function() {
+		modal4.style.display = "none";
+		$('#revokeUserId').val(' ');
+	}
+	window.onclick = function(event) {
+		if (event.target == modal4) {
+			modal4.style.display = "none";
+			$('#revokeUserId').val(' ');
+		}
+	}
+	revoke.onclick = function(){
+		modal4.style.display = "none";
+	}
+	
+	$('#revoke').on('click',function(e){
+		var uid=$('#revokeUserId').val();
+		$.get("<%=request.getContextPath()%>/RevokeAccess", {userId : "" + uid + "",fileId : "" + fileId + ""}).done(function() {
 		});
 	});
 </script>

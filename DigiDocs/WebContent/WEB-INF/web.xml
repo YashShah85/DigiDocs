@@ -99,4 +99,14 @@
     <servlet-name>GrantAccess</servlet-name>
     <url-pattern>/GrantAccess</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RevokeAccess</display-name>
+    <servlet-name>RevokeAccess</servlet-name>
+    <servlet-class>com.servlet.RevokeAccess</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RevokeAccess</servlet-name>
+    <url-pattern>/RevokeAccess</url-pattern>
+  </servlet-mapping>
 </web-app>
